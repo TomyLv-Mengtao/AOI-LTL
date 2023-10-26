@@ -158,10 +158,20 @@ def matrix2ltl(model_name,test_file_name,top_num):
     weight,bias=show_depend(model_name)
     np.set_printoptions(suppress=True,precision=2,linewidth=400)
 
+    # Start 10-26-2 Modified
     with open(test_file_name,'r') as f:
         vocab=json.load(f)['vocab']+['true']
+    vocab = ['true', 'A','B','C','D','E','F','W','X','Y','Z']
     formula_len=len(weight)
     vocab_len=len(vocab)
+    # End 10-26-2 Modified
+
+    # Start 10-26-2 Original
+    # with open(test_file_name,'r') as f:
+    #     vocab=json.load(f)['vocab']+['true']
+    # formula_len=len(weight)
+    # vocab_len=len(vocab)
+    # End 10-26-2 Original
 
     l_cof=1
 
@@ -411,6 +421,8 @@ def test_matrix(model_name, train_file_name, test_file_name, top_num=100):
     # 'model/blocks/blocks_d0/E2_8_f4_e300.model'
     # 'blocks/blocks_d0/E2_8.json'
     # print('testing',train_file_name)
+    
+    # Read files
     with open(test_file_name,'r') as f:
         E_T_dic=json.load(f)
     with open(train_file_name,'r') as f:
@@ -473,12 +485,29 @@ if __name__ == '__main__':
     # save_model='mindata_f3_d0-2_0.model'
     # train_file='mindata_f3_d0/E2_0.json'
     # test_file = 'mindata_f3_d0/ET2_0.json'
-    # top_num=100
+    # top_num=
+    
+    
+    # Start 10-26-1 modified
+    # Getting the result
     res=test_matrix(args.save_model, args.train_file, args.test_file, args.top_num)
+    # Accuracy, Precision, Recall; Pre:正确预测为正类的样本数占预测为正类的样本数的比例; Rec: 正确预测为正类的样本数占实际正类样本数的比例
     acc, pre, rec, int_time, refine_time= res[0],res[1],res[2],res[3],res[4]
     print('acc:%f, pre:%f, rec:%f, interpretation time:%f'%(acc,pre,rec,int_time+refine_time))
+    # 没有 target
     print('target ltl:', res[-2])
     print('learned ltl:',res[-1])
+    # End 10-26-1 modified
+
+    # Start 10-26-1 Original
+    # res=test_matrix(args.save_model, args.train_file, args.test_file, args.top_num)
+    # acc, pre, rec, int_time, refine_time= res[0],res[1],res[2],res[3],res[4]
+    # print('acc:%f, pre:%f, rec:%f, interpretation time:%f'%(acc,pre,rec,int_time+refine_time))
+    # print('target ltl:', res[-2])
+    # print('learned ltl:',res[-1])
+    # End 10-26-1 Original
+
+
 
 #
 # def main(args):

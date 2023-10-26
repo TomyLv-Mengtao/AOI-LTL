@@ -1,5 +1,7 @@
 ## Mengtao Lyu (mengtao.lyu@connect.polyu.hk) modified based on work of DOI: 10.1609/aaai.v36i9.21221
-## 
+## Luo, W., Liang, P., Du, J., Wan, H., Peng, B., & Zhang, D. (2022, June). 
+## Bridging LTLf Inference to GNN Inference for Learning LTLf Formulae. 
+## In Proceedings of the AAAI Conference on Artificial Intelligence (Vol. 36, No. 9, pp. 9849-9857).
 
 import torch
 import torch.nn.functional as F
