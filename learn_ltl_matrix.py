@@ -1,3 +1,6 @@
+## Mengtao Lyu (mengtao.lyu@connect.polyu.hk) modified based on work of DOI: 10.1609/aaai.v36i9.21221
+## 
+
 import torch
 import torch.nn.functional as F
 import math
