@@ -158,20 +158,10 @@ def matrix2ltl(model_name,test_file_name,top_num):
     weight,bias=show_depend(model_name)
     np.set_printoptions(suppress=True,precision=2,linewidth=400)
 
-    # Start 10-26-2 Modified
     with open(test_file_name,'r') as f:
         vocab=json.load(f)['vocab']+['true']
-    vocab = ['true', 'A','B','C','D','E','F','W','X','Y','Z']
     formula_len=len(weight)
     vocab_len=len(vocab)
-    # End 10-26-2 Modified
-
-    # Start 10-26-2 Original
-    # with open(test_file_name,'r') as f:
-    #     vocab=json.load(f)['vocab']+['true']
-    # formula_len=len(weight)
-    # vocab_len=len(vocab)
-    # End 10-26-2 Original
 
     l_cof=1
 
@@ -202,6 +192,9 @@ def matrix2ltl(model_name,test_file_name,top_num):
         total_weight=sum(abs(weight[row_idx]))
         for i in range(row_idx+1,len(row_weight)):
             # 依赖单个的有， f=a, f=!a,f=Fa,f=Ga,f=Na
+
+            # 这里！！
+
             if i>=formula_len+vocab_len and i<=row_idx+formula_len+vocab_len: # X父公式不考虑
                 continue
             if i<formula_len+vocab_len:
@@ -457,6 +450,8 @@ def test_matrix(model_name, train_file_name, test_file_name, top_num=100):
 
     if TP==0:
         return (correct/total,0,0,int_time,rw_time)
+
+        ## 10-26 这里！！
     return (correct/total,TP/(TP+FP),TP/(TP+FN),int_time,rw_time,E_T_dic["ltlftree"],ltlf_tree)  # acc,pre,rec
 
 
