@@ -56,8 +56,7 @@ class Net(torch.nn.Module):
         # 10-27 modify for matching self.weight (30) and input_x (15) - Modified
         self.formula_len=formula_len
         self.vocab_len=vocab_len
-        self.predict=torch.nn.Linear((vocab_len)*2,formula_len,bias=True)
-        print("formula", self.formula_len, "vocab",self.vocab_len)
+        self.predict=torch.nn.Linear((formula_len+vocab_len)*2,formula_len,bias=True)
         # 10-27 modify for matching self.weight (30) and input_x (15) - Modified
 
         # # 10-27 modify for matching self.weight (30) and input_x (15) - Original
@@ -81,7 +80,7 @@ class Net(torch.nn.Module):
         self.myrelu = CenteredLayer()
         # print('parameter',self.predict.state_dict())
 
-
+    # 10-27 modify for matching self.weight (30) and input_x (15) - Modified
     def forward(self,x): # x : (*,formula_len+vocab_len)
         layers_size=len(x)+self.formula_len
         end_x = torch.FloatTensor([[0] * (self.formula_len+self.vocab_len)]).to(device)
@@ -94,6 +93,22 @@ class Net(torch.nn.Module):
         x=x-0.5
         x=torch.sigmoid(x*5)
         return x
+    # 10-27 modify for matching self.weight (30) and input_x (15) - Modified
+    
+    # 10-27 modify for matching self.weight (30) and input_x (15) - Original
+    # def forward(self,x): # x : (*,formula_len+vocab_len)
+    #     layers_size=len(x)+self.formula_len
+    #     end_x = torch.FloatTensor([[0] * (self.formula_len+self.vocab_len)]).to(device)
+    #     for i in range(layers_size):
+    #         next_x = torch.cat((x[1:],end_x))    #  next_x : (*,formula_len+vocab_len)
+    #         input_x = torch.cat((x,next_x),1)    #  input_x : (*,(formula_len+vocab_len)*2)
+    #         nx=self.predict(input_x)  # nx : (*,formula_len)
+    #         nx=self.myrelu(nx)
+    #         x= torch.cat((nx,x[:,self.formula_len:]),1)  #  x: (*,formula_len+vocab_len)
+    #     x=x-0.5
+    #     x=torch.sigmoid(x*5)
+    #     return x
+    # 10-27 modify for matching self.weight (30) and input_x (15) - Original
 
 
 
