@@ -52,10 +52,21 @@ class Regular_loss(torch.nn.Module):
 class Net(torch.nn.Module):
     def __init__(self,formula_len,vocab_len):
         super(Net,self).__init__()
+        
+        # 10-27 modify for matching self.weight (30) and input_x (15) - Modified
         self.formula_len=formula_len
         self.vocab_len=vocab_len
-        self.predict=torch.nn.Linear((formula_len+vocab_len)*2,formula_len,bias=True)
+        self.predict=torch.nn.Linear((vocab_len)*2,formula_len,bias=True)
+        print("formula", self.formula_len, "vocab",self.vocab_len)
+        # 10-27 modify for matching self.weight (30) and input_x (15) - Modified
 
+        # # 10-27 modify for matching self.weight (30) and input_x (15) - Original
+        # self.formula_len=formula_len
+        # self.vocab_len=vocab_len
+        # self.predict=torch.nn.Linear((formula_len+vocab_len)*2,formula_len,bias=True)
+        # # 10-27 modify for matching self.weight (30) and input_x (15) - Original
+
+        
         new_state_dict=self.predict.state_dict()
 
         for i in range(formula_len):
@@ -83,7 +94,6 @@ class Net(torch.nn.Module):
         x=x-0.5
         x=torch.sigmoid(x*5)
         return x
-
 
 
 
