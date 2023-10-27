@@ -406,33 +406,23 @@ def get_best_ltlfs(train_dic,ltlfs):
     # print('best_score_train',best_score_train)
     return best_ltlfs
 
-
-
-
-def test_matrix(model_name, train_file_name, test_file_name, top_num=100):
-    # print('one start')
-    # 'model/blocks/blocks_d0/E2_8_f4_e300.model'
-    # 'blocks/blocks_d0/E2_8.json'
-    # print('testing',train_file_name)
-    
-    # Read files
-    with open(test_file_name,'r') as f:
-        E_T_dic=json.load(f)
+# 10-27 Modified- 根据 Bing 建议修改 Start
+def test_matrix(model_name, train_file_name, test_file_name, top_num):
     with open(train_file_name,'r') as f:
         E_dic=json.load(f)
 
     int_time=time.time()
-    ltlfs,errcnt=matrix2ltl(model_name, test_file_name,top_num)
+    ltlfs,errcnt=matrix2ltl(model_name, train_file_name,top_num)
     int_time=time.time()-int_time
-
-    # print('target ltl:',E_T_dic["ltlftree"])
 
     rw_time=time.time()
     best_ltltree=get_best_ltlfs(E_dic,ltlfs)
     rw_time=time.time()-rw_time
     ltlf_tree= best_ltltree[0]
-    ltlf = LTLf(E_T_dic["vocab"], ltlf_tree)
+    ltlf = LTLf(E_dic["vocab"], ltlf_tree)
 
+    with open(test_file_name,'r') as f:
+        E_T_dic=json.load(f)
     try:
         check_pos_mark, check_neg_mark = ltlf.evaluate(E_T_dic['traces_pos'], E_T_dic['traces_neg'])
     except:
@@ -443,17 +433,58 @@ def test_matrix(model_name, train_file_name, test_file_name, top_num=100):
     TP=sum(check_pos_mark)
     FN=len(E_T_dic['traces_pos'])-TP
     FP=sum(check_neg_mark)
-    total=len(E_T_dic['traces_pos'])+len(E_T_dic['traces_neg'])
-    # print('correct',correct,'TP,FP,FN',(TP,FP,FN),'total',len(E_T_dic['traces_pos']+E_T_dic['traces_neg']))
-    # a = input()
-    # print('TP',TP,'FP',FP,'FN',FN)
-
-    if TP==0:
+    
+    if TP+FP==0:
         return (correct/total,0,0,int_time,rw_time)
+    return (correct/total,TP/(TP+FP),TP/(TP+FN),int_time,rw_time,ltlf_tree)  # acc,pre,rec
+# 10-27 Modified- 根据 Bing 建议修改 End
 
-        ## 10-26 这里！！
-    return (correct/total,TP/(TP+FP),TP/(TP+FN),int_time,rw_time,E_T_dic["ltlftree"],ltlf_tree)  # acc,pre,rec
+# 10-27 Original- 根据 Bing 建议修改 Start
+# def test_matrix(model_name, train_file_name, test_file_name, top_num=100):
+#     # print('one start')
+#     # 'model/blocks/blocks_d0/E2_8_f4_e300.model'
+#     # 'blocks/blocks_d0/E2_8.json'
+#     # print('testing',train_file_name)
+    
+#     # Read files
+#     with open(test_file_name,'r') as f:
+#         E_T_dic=json.load(f)
+#     with open(train_file_name,'r') as f:
+#         E_dic=json.load(f)
 
+#     int_time=time.time()
+#     ltlfs,errcnt=matrix2ltl(model_name, test_file_name,top_num)
+#     int_time=time.time()-int_time
+
+#     # print('target ltl:',E_T_dic["ltlftree"])
+
+#     rw_time=time.time()
+#     best_ltltree=get_best_ltlfs(E_dic,ltlfs)
+#     rw_time=time.time()-rw_time
+#     ltlf_tree= best_ltltree[0]
+#     ltlf = LTLf(E_T_dic["vocab"], ltlf_tree)
+
+#     try:
+#         check_pos_mark, check_neg_mark = ltlf.evaluate(E_T_dic['traces_pos'], E_T_dic['traces_neg'])
+#     except:
+#         print('error')
+#         return (-1,-1,-1,int_time,rw_time)
+#     correct=sum(check_pos_mark)+(len(E_T_dic['traces_neg'])-sum(check_neg_mark))
+
+#     TP=sum(check_pos_mark)
+#     FN=len(E_T_dic['traces_pos'])-TP
+#     FP=sum(check_neg_mark)
+#     total=len(E_T_dic['traces_pos'])+len(E_T_dic['traces_neg'])
+#     # print('correct',correct,'TP,FP,FN',(TP,FP,FN),'total',len(E_T_dic['traces_pos']+E_T_dic['traces_neg']))
+#     # a = input()
+#     # print('TP',TP,'FP',FP,'FN',FN)
+
+#     if TP==0:
+#         return (correct/total,0,0,int_time,rw_time)
+
+#         ## 10-26 这里！！
+#     return (correct/total,TP/(TP+FP),TP/(TP+FN),int_time,rw_time,E_T_dic["ltlftree"],ltlf_tree)  # acc,pre,rec
+# 10-27 Original- 根据 Bing 建议修改 End
 
 def get_net_performance(result_dic):
     # i[0] 目标，i[1]预测
@@ -469,6 +500,24 @@ def get_net_performance(result_dic):
         return result_dic['correct']/result_dic['total'],0,TP/(TP+FN),float(result_dic['time'])
     return result_dic['correct']/result_dic['total'],TP/(TP+FP),TP/(TP+FN),float(result_dic['time'])
 
+
+# 10-27 Modified- 根据 Bing 建议修改 Start
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Main script for parallel')
+    parser.add_argument('-train_file', type=str, required=True,  help='training set file name')
+    parser.add_argument('-test_file', type=str, required=True,  help='test set file name')
+    parser.add_argument('-save_model', type=str, required=True, help='saved model name')
+    parser.add_argument('-top_num', type=int, required=True, help='saved model name')
+    args = parser.parse_args()
+
+    res=test_matrix(args.save_model, args.train_file, args.test_file, args.top_num)
+    acc, pre, rec, int_time, refine_time= res[0],res[1],res[2],res[3],res[4]
+    
+    print('acc:%f, pre:%f, rec:%f, interpretation time:%f'%(acc,pre,rec,int_time+refine_time))
+    print('learned ltl:',res[-1])
+# 10-27 Modified- 根据 Bing 建议修改 End
+
+# 10-27 Original- 根据 Bing 建议修改 Start
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Main script for parallel')
     parser.add_argument('-train_file', type=str, required=True,  help='training set file name')
@@ -501,7 +550,7 @@ if __name__ == '__main__':
     # print('target ltl:', res[-2])
     # print('learned ltl:',res[-1])
     # End 10-26-1 Original
-
+# 10-27 Original- 根据 Bing 建议修改 End
 
 
 #
