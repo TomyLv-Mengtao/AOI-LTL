@@ -52,18 +52,10 @@ class Regular_loss(torch.nn.Module):
 class Net(torch.nn.Module):
     def __init__(self,formula_len,vocab_len):
         super(Net,self).__init__()
-        
-        # 10-27 modify for matching self.weight (30) and input_x (15) - Modified
+
         self.formula_len=formula_len
         self.vocab_len=vocab_len
         self.predict=torch.nn.Linear((formula_len+vocab_len)*2,formula_len,bias=True)
-        # 10-27 modify for matching self.weight (30) and input_x (15) - Modified
-
-        # # 10-27 modify for matching self.weight (30) and input_x (15) - Original
-        # self.formula_len=formula_len
-        # self.vocab_len=vocab_len
-        # self.predict=torch.nn.Linear((formula_len+vocab_len)*2,formula_len,bias=True)
-        # # 10-27 modify for matching self.weight (30) and input_x (15) - Original
 
         
         new_state_dict=self.predict.state_dict()
@@ -87,6 +79,11 @@ class Net(torch.nn.Module):
         for i in range(layers_size):
             next_x = torch.cat((x[1:],end_x))    #  next_x : (*,formula_len+vocab_len)
             input_x = torch.cat((x,next_x),1)    #  input_x : (*,(formula_len+vocab_len)*2)
+            print(f"Shape of input_x: {input_x.shape}")
+            
+            assert x.shape[1] == self.formula_len + self.vocab_len, f"Expected x shape: {1, self.formula_len + self.vocab_len}, but got {x.shape}"
+            assert next_x.shape[1] == self.formula_len + self.vocab_len, f"Expected next_x shape: {1, self.formula_len + self.vocab_len}, but got {next_x.shape}"
+
             nx=self.predict(input_x)  # nx : (*,formula_len)
             nx=self.myrelu(nx)
             x= torch.cat((nx,x[:,self.formula_len:]),1)  #  x: (*,formula_len+vocab_len)
@@ -204,8 +201,17 @@ def train(train_file,formula_len,save_name,epoch_num,log_file,ins=0,case=0,learn
         for batch_data in train_dataloader:
             data=batch_data[0] #每个例子过的层数不一样。。所以就一个一个跑了
             prediction = model(data[0])
-            label = torch.FloatTensor([batch_data[1]]).to(device)
+            
+            # 10-28
+            # label = torch.FloatTensor([batch_data[1]]).to(device)
+            # loss = loss_func(prediction[0][0], label)
+
+            # Ensure label is a tensor with the same size as prediction
+            label = torch.FloatTensor([batch_data[1]]).to(device).unsqueeze(0)
             loss = loss_func(prediction[0][0], label)
+            # 10-28
+
+            
             epoch_loss+= loss.detach().cpu().numpy()
             # loss/=len(train_dataset)
             loss.backward()
@@ -290,8 +296,8 @@ if __name__ == '__main__':
 
 # uncommond the following code to run training on multiple datasets
 # def main(args):
-#
-#
+
+
 #     total_sample_num = args.epoch
 #     tag = args.tag
 #     repeat_times=1
@@ -299,7 +305,7 @@ if __name__ == '__main__':
 #     fix_len=True
 #     fix_lens=[int(i) for i in args.netlen.split()]
 #     result = []
-#
+
 #     domains=args.domains.split()
 #     instace_num=[int(i) for i in args.inss.split()]
 #     case_num = [i for i in range(0,args.casenum)]
@@ -332,9 +338,9 @@ if __name__ == '__main__':
 #     pool.close()
 #     pool.join()
 #     ret = [x.get() for x in result] #返回每个用的时间
-#
-#
-#
+
+
+
 #     cnt = 0
 #     fcnt = 0
 #     for domain in domains:
@@ -359,9 +365,9 @@ if __name__ == '__main__':
 #         with open('model1/tag%d/result_domain%s_netlen%d_epoch%d_tag%d.json'%(tag,domain,fix_lens[fcnt],total_sample_num,tag),'w') as f:
 #             json.dump(result,f,indent=2)
 #         fcnt += 1
-#
-#
-#
+
+
+
 # if __name__ == '__main__':
 #     parser = argparse.ArgumentParser(description='Main script for parallel')
 #     parser.add_argument('-domains', type=str, required=True,  help='domains')
@@ -374,7 +380,7 @@ if __name__ == '__main__':
 #     parser.add_argument('-l1', type=float, required=False, default=0.2, help='l1 cof')
 #     parser.add_argument('-jobsize', type=int, required=False, default=35, help='threads number')
 #     parser.add_argument('-noise_num', type=int, required=False, default=0, help='noise number')
-#
+
 #     #python learn_ltl_matrix.py -domains='mindata_f6 mindata_f6' -netlen='5 10' -tag=205 -epoch=200000 -inss='2' -casenum=50 -lr=1e-4 -jobsize=35 -noise_num=0 -l1=0.2
 #     args = parser.parse_args()
 #     main(args)
