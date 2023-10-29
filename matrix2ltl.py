@@ -433,6 +433,7 @@ def test_matrix(model_name, train_file_name, test_file_name, top_num):
     TP=sum(check_pos_mark)
     FN=len(E_T_dic['traces_pos'])-TP
     FP=sum(check_neg_mark)
+    total=len(E_T_dic['traces_pos'])+len(E_T_dic['traces_neg'])
     
     if TP+FP==0:
         return (correct/total,0,0,int_time,rw_time)

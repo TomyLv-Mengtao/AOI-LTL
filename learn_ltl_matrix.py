@@ -79,7 +79,7 @@ class Net(torch.nn.Module):
         for i in range(layers_size):
             next_x = torch.cat((x[1:],end_x))    #  next_x : (*,formula_len+vocab_len)
             input_x = torch.cat((x,next_x),1)    #  input_x : (*,(formula_len+vocab_len)*2)
-            print(f"Shape of input_x: {input_x.shape}")
+            # print(i, f"Shape of input_x: {input_x.shape}")
             
             assert x.shape[1] == self.formula_len + self.vocab_len, f"Expected x shape: {1, self.formula_len + self.vocab_len}, but got {x.shape}"
             assert next_x.shape[1] == self.formula_len + self.vocab_len, f"Expected next_x shape: {1, self.formula_len + self.vocab_len}, but got {next_x.shape}"
@@ -198,10 +198,18 @@ def train(train_file,formula_len,save_name,epoch_num,log_file,ins=0,case=0,learn
     batch_size=10
     for epoch in range(epoch_num):
         epoch_loss=0
-        for batch_data in train_dataloader:
-            data=batch_data[0] #每个例子过的层数不一样。。所以就一个一个跑了
+        
+        # 10-29 - Modified
+        for i, batch_data in enumerate(train_dataloader):  # Add enumerate to get the index
+            print(f"Processing trace number {i+1}")
+            data = batch_data[0]
             prediction = model(data[0])
-            
+        # 10-29 - Modified
+        # 10-29 - Original
+        # for batch_data in train_dataloader:
+        #     data=batch_data[0] #每个例子过的层数不一样。。所以就一个一个跑了
+        #     prediction = model(data[0])
+        # 10-29 -  Original  
             # 10-28
             # label = torch.FloatTensor([batch_data[1]]).to(device)
             # loss = loss_func(prediction[0][0], label)
