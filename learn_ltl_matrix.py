@@ -201,7 +201,7 @@ def train(train_file,formula_len,save_name,epoch_num,log_file,ins=0,case=0,learn
         
         # 10-29 - Modified
         for i, batch_data in enumerate(train_dataloader):  # Add enumerate to get the index
-            print(f"Processing trace number {i+1}")
+            # print(f"Processing trace number {i+1}")
             data = batch_data[0]
             prediction = model(data[0])
         # 10-29 - Modified
