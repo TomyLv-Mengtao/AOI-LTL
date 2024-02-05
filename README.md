@@ -33,5 +33,5 @@ python matrix2ltl.py -train_file=All2All/20/training_10.json -test_file=All2All/
 
 python learn_ltl_matrix.py -train_file=All2One/20/training_10.json -test_file=All2One/20/training_10.json -save_model=All2One/20/training_10.model -log_file=All2One/20/training_10.log -res_file=All2One/20/training_10.txt -epoch_num=20
 
-python matrix2ltl.py -train_file=All2One/20/training_1.json -test_file=All2One/20/test_1.json -save_model=All2One/20/training_1.model -top_num=100
+python matrix2ltl.py -train_file=All2One/20/training_10.json -test_file=All2One/20/test_10.json -save_model=All2One/20/training_10.model -top_num=100
 ```
