@@ -514,7 +514,8 @@ if __name__ == '__main__':
     res=test_matrix(args.save_model, args.train_file, args.test_file, args.top_num)
     acc, pre, rec, int_time, refine_time= res[0],res[1],res[2],res[3],res[4]
     
-    print('acc:%f, pre:%f, rec:%f, interpretation time:%f'%(acc,pre,rec,int_time+refine_time))
+    # print('acc:%f, pre:%f, rec:%f, interpretation time:%f'%(acc,pre,rec,int_time+refine_time))
+    # print('acc:%.3f, pre:%.3f, rec:%.3f'%(acc,pre,rec)) # 02-06，修改输出格式
     print('learned ltl:',res[-1])
 # 10-27 Modified- 根据 Bing 建议修改 End
 
@@ -538,9 +539,10 @@ if __name__ == '__main__':
     res=test_matrix(args.save_model, args.train_file, args.test_file, args.top_num)
     # Accuracy, Precision, Recall; Pre:正确预测为正类的样本数占预测为正类的样本数的比例; Rec: 正确预测为正类的样本数占实际正类样本数的比例
     acc, pre, rec, int_time, refine_time= res[0],res[1],res[2],res[3],res[4]
-    print('acc:%f, pre:%f, rec:%f, interpretation time:%f'%(acc,pre,rec,int_time+refine_time))
+    # print('acc:%f, pre:%f, rec:%f, interpretation time:%f'%(acc,pre,rec,int_time+refine_time))
+    print('acc:%.3f, pre:%.3f, rec:%.3f'%(acc,pre,rec)) # 02-06，修改输出格式
     # 没有 target
-    print('target ltl:', res[-2])
+    # print('target ltl:', res[-2]) #02-06, 不需显示
     print('learned ltl:',res[-1])
     # End 10-26-1 modified
 
