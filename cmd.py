@@ -2,43 +2,23 @@ import os
 
 commands = [
 
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_1.json -test_file=V2/Training_Set/25/training_1.json -save_model=V2/Log/25/training_1.model -log_file=V2/Log/25/training_1.log -res_file=V2/Log/25/training_1.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_2.json -test_file=V2/Training_Set/25/training_2.json -save_model=V2/Log/25/training_2.model -log_file=V2/Log/25/training_2.log -res_file=V2/Log/25/training_2.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_3.json -test_file=V2/Training_Set/25/training_3.json -save_model=V2/Log/25/training_3.model -log_file=V2/Log/25/training_3.log -res_file=V2/Log/25/training_3.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_4.json -test_file=V2/Training_Set/25/training_4.json -save_model=V2/Log/25/training_4.model -log_file=V2/Log/25/training_4.log -res_file=V2/Log/25/training_4.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_5.json -test_file=V2/Training_Set/25/training_5.json -save_model=V2/Log/25/training_5.model -log_file=V2/Log/25/training_5.log -res_file=V2/Log/25/training_5.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_6.json -test_file=V2/Training_Set/25/training_6.json -save_model=V2/Log/25/training_6.model -log_file=V2/Log/25/training_6.log -res_file=V2/Log/25/training_6.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_7.json -test_file=V2/Training_Set/25/training_7.json -save_model=V2/Log/25/training_7.model -log_file=V2/Log/25/training_7.log -res_file=V2/Log/25/training_7.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_8.json -test_file=V2/Training_Set/25/training_8.json -save_model=V2/Log/25/training_8.model -log_file=V2/Log/25/training_8.log -res_file=V2/Log/25/training_8.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_9.json -test_file=V2/Training_Set/25/training_9.json -save_model=V2/Log/25/training_9.model -log_file=V2/Log/25/training_9.log -res_file=V2/Log/25/training_9.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=V2/Training_Set/25/training_10.json -test_file=V2/Training_Set/25/training_10.json -save_model=V2/Log/25/training_10.model -log_file=V2/Log/25/training_10.log -res_file=V2/Log/25/training_10.txt -epoch_num=80"
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_1.json -test_file=V2/Training_Set/35/test_1.json -save_model=V2/Log/35/training_1.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_2.json -test_file=V2/Training_Set/35/test_2.json -save_model=V2/Log/35/training_2.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_3.json -test_file=V2/Training_Set/35/test_3.json -save_model=V2/Log/35/training_3.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_4.json -test_file=V2/Training_Set/35/test_4.json -save_model=V2/Log/35/training_4.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_5.json -test_file=V2/Training_Set/35/test_5.json -save_model=V2/Log/35/training_5.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_6.json -test_file=V2/Training_Set/35/test_6.json -save_model=V2/Log/35/training_6.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_7.json -test_file=V2/Training_Set/35/test_7.json -save_model=V2/Log/35/training_7.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_8.json -test_file=V2/Training_Set/35/test_8.json -save_model=V2/Log/35/training_8.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_9.json -test_file=V2/Training_Set/35/test_9.json -save_model=V2/Log/35/training_9.model -top_num=100",
+"python matrix2ltl.py -train_file=V2/Training_Set/35/training_10.json -test_file=V2/Training_Set/35/test_10.json -save_model=V2/Log/35/training_10.model -top_num=100"
 
-"python learn_ltl_matrix.py -train_file=All2All/25/training_1.json -test_file=All2All/25/training_1.json -save_model=All2All/25/training_1.model -log_file=All2All/25/training_1.log -res_file=All2All/25/training_1.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_2.json -test_file=All2All/25/training_2.json -save_model=All2All/25/training_2.model -log_file=All2All/25/training_2.log -res_file=All2All/25/training_2.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_3.json -test_file=All2All/25/training_3.json -save_model=All2All/25/training_3.model -log_file=All2All/25/training_3.log -res_file=All2All/25/training_3.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_4.json -test_file=All2All/25/training_4.json -save_model=All2All/25/training_4.model -log_file=All2All/25/training_4.log -res_file=All2All/25/training_4.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_5.json -test_file=All2All/25/training_5.json -save_model=All2All/25/training_5.model -log_file=All2All/25/training_5.log -res_file=All2All/25/training_5.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_6.json -test_file=All2All/25/training_6.json -save_model=All2All/25/training_6.model -log_file=All2All/25/training_6.log -res_file=All2All/25/training_6.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_7.json -test_file=All2All/25/training_7.json -save_model=All2All/25/training_7.model -log_file=All2All/25/training_7.log -res_file=All2All/25/training_7.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_8.json -test_file=All2All/25/training_8.json -save_model=All2All/25/training_8.model -log_file=All2All/25/training_8.log -res_file=All2All/25/training_8.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_9.json -test_file=All2All/25/training_9.json -save_model=All2All/25/training_9.model -log_file=All2All/25/training_9.log -res_file=All2All/25/training_9.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2All/25/training_10.json -test_file=All2All/25/training_10.json -save_model=All2All/25/training_10.model -log_file=All2All/25/training_10.log -res_file=All2All/25/training_10.txt -epoch_num=80"
 
-"python learn_ltl_matrix.py -train_file=All2One/25/training_1.json -test_file=All2One/25/training_1.json -save_model=All2One/25/training_1.model -log_file=All2One/25/training_1.log -res_file=All2One/25/training_1.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_2.json -test_file=All2One/25/training_2.json -save_model=All2One/25/training_2.model -log_file=All2One/25/training_2.log -res_file=All2One/25/training_2.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_3.json -test_file=All2One/25/training_3.json -save_model=All2One/25/training_3.model -log_file=All2One/25/training_3.log -res_file=All2One/25/training_3.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_4.json -test_file=All2One/25/training_4.json -save_model=All2One/25/training_4.model -log_file=All2One/25/training_4.log -res_file=All2One/25/training_4.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_5.json -test_file=All2One/25/training_5.json -save_model=All2One/25/training_5.model -log_file=All2One/25/training_5.log -res_file=All2One/25/training_5.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_6.json -test_file=All2One/25/training_6.json -save_model=All2One/25/training_6.model -log_file=All2One/25/training_6.log -res_file=All2One/25/training_6.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_7.json -test_file=All2One/25/training_7.json -save_model=All2One/25/training_7.model -log_file=All2One/25/training_7.log -res_file=All2One/25/training_7.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_8.json -test_file=All2One/25/training_8.json -save_model=All2One/25/training_8.model -log_file=All2One/25/training_8.log -res_file=All2One/25/training_8.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_9.json -test_file=All2One/25/training_9.json -save_model=All2One/25/training_9.model -log_file=All2One/25/training_9.log -res_file=All2One/25/training_9.txt -epoch_num=80",
-"python learn_ltl_matrix.py -train_file=All2One/25/training_10.json -test_file=All2One/25/training_10.json -save_model=All2One/25/training_10.model -log_file=All2One/25/training_10.log -res_file=All2One/25/training_10.txt -epoch_num=80"
 ]
 
 i = 1
 for command in commands:
-    print("\n",i," 25秒 VAT 解析")
+    print("\n",i," 35秒 VAT 解析")
     os.system(command)
     i +=1
 
